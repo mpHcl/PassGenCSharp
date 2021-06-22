@@ -10,10 +10,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PassGenCSharp.App.Data;
 using PassGenCSharp.App.Generator;
+using PassGenCSharp.App.Security;
 
 namespace PassGenCSharp
 {
-    public partial class Main : System.Windows.Forms.Form {
+    public partial class Home : System.Windows.Forms.Form {
         Data data;
 
         TextBox passwordInput;
@@ -26,7 +27,7 @@ namespace PassGenCSharp
 
         bool isOnAddingPage;
 
-        public Main() {
+        public Home() {
             InitializeComponent();
             settings = new Settings();
             settings.Length = 16;
@@ -50,6 +51,8 @@ namespace PassGenCSharp
                 MessageBox.Show("No folder selected");
                 this.Close();
             }
+
+            
         }
 
         private void fillPanel(bool edit) {
@@ -160,19 +163,26 @@ namespace PassGenCSharp
             showButton.Text = "SHOW";
             showButton.Width = 87;
             showButton.Margin = new Padding(10, 5, 10, 2);
-            showButton.Click += showPassword;
+            showButton.Click += showPassword; 
+            showButton.FlatStyle = FlatStyle.Flat;
+            showButton.FlatAppearance.BorderColor = Color.White;
 
             Button generationSettingsButton = new Button();
             generationSettingsButton.Text = "SETTINGS";
             generationSettingsButton.Width = 87;
             generationSettingsButton.Margin = new Padding(10, 5, 10, 2);
             generationSettingsButton.Click += Settings_clicked;
+            generationSettingsButton.FlatStyle = FlatStyle.Flat;
+            generationSettingsButton.FlatAppearance.BorderColor = Color.White;
+
 
             Button generateButton = new Button();
             generateButton.Text = "GENERATE";
             generateButton.Width = 87;
             generateButton.Margin = new Padding(10, 5, 10, 2);
             generateButton.Click += generatePassword;
+            generateButton.FlatStyle = FlatStyle.Flat;
+            generateButton.FlatAppearance.BorderColor = Color.White;
 
             flowLayoutPanel2.Controls.Add(showButton);
             flowLayoutPanel2.Controls.Add(generationSettingsButton);
@@ -198,6 +208,8 @@ namespace PassGenCSharp
             saveButton.Width = 300;
             saveButton.Margin = new Padding(10, 5, 10, 2);
             saveButton.Click += SaveButton_Click;
+            saveButton.FlatStyle = FlatStyle.Flat;
+            saveButton.FlatAppearance.BorderColor = Color.White;
 
             flowLayoutPanel2.Controls.Add(saveButton);
         }
@@ -226,23 +238,37 @@ namespace PassGenCSharp
             clearButtons();
             button4.BackColor = Color.LightGray;
 
+            Label title = new Label();
+            title.Text = "Generator";
+            title.Font = new Font("century gothic", 18);
+            title.AutoSize = true;
+            title.Margin = new Padding(3, 3, 3, 25);
+
             Button showButton = new Button();
             showButton.Text = "SHOW";
             showButton.Width = 86;
             showButton.Margin = new Padding(10, 5, 10, 2);
             showButton.Click += showPassword;
+            showButton.FlatStyle = FlatStyle.Flat;
+            showButton.FlatAppearance.BorderColor = Color.White;
+
 
             Button generationSettingsButton = new Button();
             generationSettingsButton.Text = "SETTINGS";
             generationSettingsButton.Width = 87;
             generationSettingsButton.Margin = new Padding(10, 5, 10, 2);
             generationSettingsButton.Click += Settings_clicked;
+            generationSettingsButton.FlatStyle = FlatStyle.Flat;
+            generationSettingsButton.FlatAppearance.BorderColor = Color.White;
+
 
             Button generateButton = new Button();
             generateButton.Text = "GENERATE";
             generateButton.Width = 86;
             generateButton.Margin = new Padding(10, 5, 10, 2);
             generateButton.Click += generatePassword;
+            generateButton.FlatStyle = FlatStyle.Flat;
+            generateButton.FlatAppearance.BorderColor = Color.White;
 
 
             passwordInput = new TextBox();
@@ -252,8 +278,9 @@ namespace PassGenCSharp
             passwordInput.PasswordChar = '*';
 
 
-            flowLayoutPanel2.Controls.Add(passwordInput);
+            flowLayoutPanel2.Controls.Add(title);
 
+            flowLayoutPanel2.Controls.Add(passwordInput);
 
             flowLayoutPanel2.Controls.Add(showButton);
             flowLayoutPanel2.Controls.Add(generationSettingsButton);
@@ -275,6 +302,7 @@ namespace PassGenCSharp
         private void SaveButton_Click(object sender, EventArgs e) {
             Model model = new Model(0, platformInput.Text, emailInput.Text,
                 passwordInput.Text, descriptionInput.Text, nicknameInput.Text);
+            Console.WriteLine(model.Description);
             data.AddRecord(model);
 
             MessageBox.Show("Zapisano hasło");
@@ -311,7 +339,7 @@ namespace PassGenCSharp
             var platform = data.getDetails(text);
 
             foreach (var record in platform) {
-                var edit = new Edit(record);
+                var edit = new Edit(record, data);
                 edit.Show();
             }
         }

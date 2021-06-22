@@ -13,14 +13,16 @@ using System.Windows.Forms;
 namespace PassGenCSharp { 
     public partial class Edit : Form {
         Model model;
+        Data data;
         public Edit() {
             InitializeComponent();
         }
 
-        public Edit(Model model) {
+        public Edit(Model model, Data data) {
             InitializeComponent();
             this.model = model;
             this.Text = model.Platform;
+            this.data = data;
         }
 
         private void Edit_Load(object sender, EventArgs e) {
@@ -39,7 +41,8 @@ namespace PassGenCSharp {
             model.Description = richTextBox1.Text;
 
             try {
-                new Data().updateDetails(model);
+                Console.WriteLine(model.Password);
+                data.updateDetails(model);
                 MessageBox.Show("Zapisano");
                 this.Text = model.Platform;
                 this.Close();

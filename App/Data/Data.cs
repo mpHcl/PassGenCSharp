@@ -5,11 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.IO;
+using System.Security.Cryptography;
+using PassGenCSharp.App.Security;
 
 namespace PassGenCSharp.App.Data
 {
-    class Data {
+    public class Data {
         SQLiteConnection connection;
+        StringAES aes = new StringAES();
         public Data() {
             string dataPath = @"URI=file:C:\Programowanie\Projekty\PassGenCSharp\App\Data\data.db";
             connection = new SQLiteConnection(dataPath);
@@ -42,27 +45,7 @@ namespace PassGenCSharp.App.Data
             }
             
         }
-
-        public List<Model> getData() {
-            List<Model> results = new List<Model>();
-            connection.Open();
-            string commandText = "SELECT * FROM Passwords";
-            var command = new SQLiteCommand(commandText, connection);
-            var reader = command.ExecuteReader();
-
-            while (reader.Read()) {
-                Model item = new Model();
-                item.Platform = reader.GetString(1);
-                item.Password = reader.GetString(3);
-                item.ID = reader.GetInt32(0);
-                results.Add(item);
-            }
-
-            connection.Close();
-
-            return results;
-        }
-        
+       
         public List<String> getPlatforms() {
             List<string> results = new List<string>();
             connection.Open();
@@ -85,33 +68,13 @@ namespace PassGenCSharp.App.Data
             string commandText = "INSERT INTO Passwords " +
                                  "(Platform, Email, Password, Description, Nickname) " +
                                 $"VALUES ('{ model.Platform }', '{model.Email}'," +
-                                $" '{model.Password}', '{model.Description}', '{ model.Nickname }' )";
+                                $" '{aes.BytesArrayAsString(aes.EncryptStringToBytes(model.Password))}'," +
+                                $" '{model.Description}', '{ model.Nickname }' )";
             var command = new SQLiteCommand(commandText, connection);
             command.ExecuteNonQuery();
             connection.Close();
         }
 
-        public Model getDetails(int ID) {
-            Model result = new Model();
-            
-            connection.Open();
-            string commandText = $"SELECT * FROM Passwords WHERE ID = {ID}";
-            var command = new SQLiteCommand(commandText, connection);
-            var reader = command.ExecuteReader();
-
-            while (reader.Read()) {
-                result.ID = reader.GetInt32(0);
-                result.Platform = reader.GetString(1);
-                result.Email = reader.GetString(2);
-                result.Password = reader.GetString(3);
-                result.Description = reader.GetString(4);
-                result.Nickname = reader.GetString(5);
-
-                break;
-            }
-            connection.Close();
-            return result;
-        }
 
         public List<Model> getDetails(string title) {
             List<Model> results = new List<Model>();
@@ -121,14 +84,17 @@ namespace PassGenCSharp.App.Data
             var reader = command.ExecuteReader();
 
             
+
             while (reader.Read()) {
                 Model item = new Model();
                 item.ID = reader.GetInt32(0);
                 item.Platform = reader.GetString(1);
                 item.Email = reader.GetString(2);
-                item.Password = reader.GetString(3);
+                item.Password = aes.DecryptBytesToString(aes.StringAsByteArray(reader.GetString(3)));
                 item.Description = reader.GetString(4);
                 item.Nickname = reader.GetString(5);
+
+                Console.WriteLine(item.Description);
 
                 results.Add(item);
             }
@@ -139,15 +105,16 @@ namespace PassGenCSharp.App.Data
 
         public void updateDetails(Model model) {
             connection.Open();
+            Console.WriteLine(model.Description);
             string commandText = $"UPDATE Passwords " +
                                  $"SET Platform = '{model.Platform}'," +
-                                 $"Password = '{model.Password}', " +
+                                 $"Password = '{aes.BytesArrayAsString(aes.EncryptStringToBytes(model.Password))}', " +
                                  $"Email = '{model.Email}'," +
                                  $"Description = '{model.Description}', " +
                                  $"Nickname = '{model.Nickname}' " +
-                                 $"WHERE ID = '{model.ID}'";
+                                 $"WHERE ID = '{model.ID}';";
             var command = new SQLiteCommand(commandText, connection);
-            command.ExecuteNonQuery();
+            Console.WriteLine(command.ExecuteNonQuery());
             connection.Close();
         }
     }

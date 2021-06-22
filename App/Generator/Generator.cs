@@ -33,7 +33,7 @@ namespace PassGenCSharp.App.Generator {
         }
 
         public static string generatePasswordPrintableChars(int size) {
-            string chars = "1234567890AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz!@#$%^&*()_+{}[]|\\:;\"<,>.?/";
+            string chars = "1234567890AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz!@#$%^&*()_+{}[]|\\:;\"<,>./";
             string result = "";
             var random = new Random();
             for (int i = 0; i < size; i++) {

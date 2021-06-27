@@ -41,14 +41,14 @@ namespace PassGenCSharp {
             model.Description = richTextBox1.Text;
 
             try {
-                Console.WriteLine(model.Password);
+                Console.WriteLine(model.Nickname);
                 data.updateDetails(model);
-                MessageBox.Show("Zapisano");
+                MessageBox.Show("Changes saved");
                 this.Text = model.Platform;
                 this.Close();
             }
             catch (SQLiteException ex) {
-                MessageBox.Show($"Wystąpił błąd\n{ ex.ToString() }");
+                MessageBox.Show($"Problem run into problem, try again\n{ ex.ToString() }");
             }
 
             
@@ -92,6 +92,12 @@ namespace PassGenCSharp {
             x = Cursor.Position.X;
             y = Cursor.Position.Y;
 
+        }
+
+        private void button2_Click(object sender, EventArgs e) {
+            data.deleteRecord(model);
+            MessageBox.Show("Info deleted");
+            this.Close();
         }
     }
 }

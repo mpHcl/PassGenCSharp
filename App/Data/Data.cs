@@ -24,7 +24,6 @@ namespace PassGenCSharp.App.Data
             if (!File.Exists(path)) {
                 var file = File.Create(path);
                 file.Close();
-                Console.WriteLine(@"URI=flie:" + path);
                 connection = new SQLiteConnection("URI=file:" + path);
                 connection.Open();
                 var commandText = "CREATE TABLE Passwords (" +
@@ -91,10 +90,9 @@ namespace PassGenCSharp.App.Data
                 item.Platform = reader.GetString(1);
                 item.Email = reader.GetString(2);
                 item.Password = aes.DecryptBytesToString(aes.StringAsByteArray(reader.GetString(3)));
-                item.Description = reader.GetString(4);
-                item.Nickname = reader.GetString(5);
+                item.Description = reader.GetString(5);
+                item.Nickname = reader.GetString(4);
 
-                Console.WriteLine(item.Description);
 
                 results.Add(item);
             }
@@ -105,7 +103,6 @@ namespace PassGenCSharp.App.Data
 
         public void updateDetails(Model model) {
             connection.Open();
-            Console.WriteLine(model.Description);
             string commandText = $"UPDATE Passwords " +
                                  $"SET Platform = '{model.Platform}'," +
                                  $"Password = '{aes.BytesArrayAsString(aes.EncryptStringToBytes(model.Password))}', " +
@@ -113,8 +110,16 @@ namespace PassGenCSharp.App.Data
                                  $"Description = '{model.Description}', " +
                                  $"Nickname = '{model.Nickname}' " +
                                  $"WHERE ID = '{model.ID}';";
-            var command = new SQLiteCommand(commandText, connection);
-            Console.WriteLine(command.ExecuteNonQuery());
+            new SQLiteCommand(commandText, connection).ExecuteNonQuery();
+            connection.Close();
+        }
+
+        public void deleteRecord(Model model) {
+            connection.Open();
+            string commandText = $"DELETE FROM Passwords WHERE ID = {model.ID}";
+            new SQLiteCommand(commandText, connection).ExecuteNonQuery();
+
+
             connection.Close();
         }
     }

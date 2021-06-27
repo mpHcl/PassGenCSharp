@@ -40,6 +40,7 @@ namespace PassGenCSharp {
             this.label6 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.button2 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -144,7 +145,7 @@ namespace PassGenCSharp {
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(74, 271);
+            this.button1.Location = new System.Drawing.Point(143, 280);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(95, 23);
             this.button1.TabIndex = 21;
@@ -198,12 +199,24 @@ namespace PassGenCSharp {
             this.timer1.Interval = 1;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(12, 280);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(95, 23);
+            this.button2.TabIndex = 23;
+            this.button2.Text = "DELETE";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(250, 315);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.richTextBox1);
@@ -244,5 +257,6 @@ namespace PassGenCSharp {
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button button2;
     }
 }

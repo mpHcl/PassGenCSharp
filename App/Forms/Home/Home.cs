@@ -55,8 +55,8 @@ namespace PassGenCSharp
             
         }
 
-        private void fillPanel(bool edit) {
-            var lista = data.getPlatforms();
+        private void FillPanel(bool edit) {
+            var lista = data.GetPlatforms();
 
             flowLayoutPanel2.Controls.Clear();
 
@@ -82,9 +82,9 @@ namespace PassGenCSharp
                 button.BackColor = Color.White;
                 button.Height = 40;
                 if (edit)
-                    button.Click += openEdit;
+                    button.Click += OpenEdit;
                 else
-                    button.Click += openDetails;
+                    button.Click += OpenDetails;
                 flowLayoutPanel2.Controls.Add(button);
             }
         }
@@ -93,7 +93,7 @@ namespace PassGenCSharp
             isOnSettingsPage = false;
             flowLayoutPanel2.Controls.Clear();
 
-            clearButtons();
+            ClearButtons();
             button1.BackColor = Color.LightGray;
 
             //Platform input
@@ -163,7 +163,7 @@ namespace PassGenCSharp
             showButton.Text = "SHOW";
             showButton.Width = 87;
             showButton.Margin = new Padding(10, 5, 10, 2);
-            showButton.Click += showPassword; 
+            showButton.Click += ShowPassword; 
             showButton.FlatStyle = FlatStyle.Flat;
             showButton.FlatAppearance.BorderColor = Color.White;
 
@@ -180,7 +180,7 @@ namespace PassGenCSharp
             generateButton.Text = "GENERATE";
             generateButton.Width = 87;
             generateButton.Margin = new Padding(10, 5, 10, 2);
-            generateButton.Click += generatePassword;
+            generateButton.Click += GeneratePassword;
             generateButton.FlatStyle = FlatStyle.Flat;
             generateButton.FlatAppearance.BorderColor = Color.White;
 
@@ -217,16 +217,16 @@ namespace PassGenCSharp
         private void button2_Click(object sender, EventArgs e) {
             isOnAddingPage = false;
             isOnSettingsPage = false;
-            fillPanel(true);
-            clearButtons();
+            FillPanel(true);
+            ClearButtons();
             button2.BackColor = Color.LightGray;
         }
 
         private void button3_Click(object sender, EventArgs e) {
             isOnAddingPage = false;
             isOnSettingsPage = false;
-            fillPanel(false);
-            clearButtons();
+            FillPanel(false);
+            ClearButtons();
             button3.BackColor = Color.LightGray;
         }
 
@@ -235,7 +235,7 @@ namespace PassGenCSharp
             isOnSettingsPage = false;
             flowLayoutPanel2.Controls.Clear();
             
-            clearButtons();
+            ClearButtons();
             button4.BackColor = Color.LightGray;
 
             Label title = new Label();
@@ -248,7 +248,7 @@ namespace PassGenCSharp
             showButton.Text = "SHOW";
             showButton.Width = 86;
             showButton.Margin = new Padding(10, 5, 10, 2);
-            showButton.Click += showPassword;
+            showButton.Click += ShowPassword;
             showButton.FlatStyle = FlatStyle.Flat;
             showButton.FlatAppearance.BorderColor = Color.White;
 
@@ -266,7 +266,7 @@ namespace PassGenCSharp
             generateButton.Text = "GENERATE";
             generateButton.Width = 86;
             generateButton.Margin = new Padding(10, 5, 10, 2);
-            generateButton.Click += generatePassword;
+            generateButton.Click += GeneratePassword;
             generateButton.FlatStyle = FlatStyle.Flat;
             generateButton.FlatAppearance.BorderColor = Color.White;
 
@@ -289,8 +289,8 @@ namespace PassGenCSharp
 
         private void Main_Activated(object sender, EventArgs e) {
             if (!isOnAddingPage && !isOnSettingsPage) {
-                fillPanel(false);
-                clearButtons();
+                FillPanel(false);
+                ClearButtons();
                 button3.BackColor = Color.LightGray;
             }
         }
@@ -308,17 +308,17 @@ namespace PassGenCSharp
             MessageBox.Show("Zapisano hasło");
         }
 
-        private void generatePassword(object sender, EventArgs e) {
+        private void GeneratePassword(object sender, EventArgs e) {
             string password;
             switch (settings.Type) {
-                case 0: password = Generator.generatePasswordAlfabetical(settings.Length);
+                case 0: password = Generator.GeneratePasswordAlfabetical(settings.Length);
                     break;
-                case 1: password = Generator.generatePasswordAlfanumerical(settings.Length);
+                case 1: password = Generator.GeneratePasswordAlfanumerical(settings.Length);
                     break;
-                case 2: password = Generator.generatePasswordPrintableChars(settings.Length);
+                case 2: password = Generator.GeneratePasswordPrintableChars(settings.Length);
                     break;
 
-                default: password = Generator.generatePasswordAlfabetical(settings.Length);
+                default: password = Generator.GeneratePasswordAlfabetical(settings.Length);
                     break;
             }
            
@@ -326,7 +326,7 @@ namespace PassGenCSharp
             passwordInput.Text = password;
         }
 
-        private void showPassword(object sender, EventArgs e) {
+        private void ShowPassword(object sender, EventArgs e) {
             if (passwordInput.PasswordChar == '*')
                 passwordInput.PasswordChar = (char) 0;
             else
@@ -334,9 +334,9 @@ namespace PassGenCSharp
 
         }
 
-        private void openEdit(object sender, EventArgs e) {
+        private void OpenEdit(object sender, EventArgs e) {
             var text = (sender as Button).Text;
-            var platform = data.getDetails(text);
+            var platform = data.GetDetails(text);
 
             foreach (var record in platform) {
                 var edit = new Edit(record, data);
@@ -344,9 +344,9 @@ namespace PassGenCSharp
             }
         }
 
-        private void openDetails(object sender, EventArgs e) {
+        private void OpenDetails(object sender, EventArgs e) {
             var text = (sender as Button).Text;
-            var platform = data.getDetails(text);
+            var platform = data.GetDetails(text);
 
             foreach (var record in platform) {
                 var details = new Details(record);
@@ -355,7 +355,10 @@ namespace PassGenCSharp
         }
 
         private void button5_Click(object sender, EventArgs e) {
+            Application.Exit();
             this.Close();
+
+
         }
 
         private void button6_Click(object sender, EventArgs e) {
@@ -397,7 +400,7 @@ namespace PassGenCSharp
         bool isHidden = false;
         private void button7_Click_2(object sender, EventArgs e) {
             if (!isHidden) {
-                buttonVisible(false);
+                ButtonVisible(false);
                 for (int i = 0; i < 145; i++) {
                     button7.Width -= i % 2;
                     flowLayoutPanel1.Width = flowLayoutPanel1.Width - 1;
@@ -418,12 +421,12 @@ namespace PassGenCSharp
                     flowLayoutPanel2.Location =
                         new Point(flowLayoutPanel2.Location.X + (i % 2), flowLayoutPanel2.Location.Y);
                 }
-                buttonVisible(true);
+                ButtonVisible(true);
                 isHidden = false;
             }
         }
         
-        private void clearButtons() {
+        private void ClearButtons() {
             button1.BackColor = Color.FromArgb(36, 199, 147);
             button2.BackColor = Color.FromArgb(36, 199, 147);
             button3.BackColor = Color.FromArgb(36, 199, 147);
@@ -432,7 +435,7 @@ namespace PassGenCSharp
             button9.BackColor = Color.FromArgb(36, 199, 147);
         }
 
-        private void buttonVisible(bool visible) {
+        private void ButtonVisible(bool visible) {
             button1.Visible = visible;
             button2.Visible = visible;
             button3.Visible = visible;
@@ -443,7 +446,7 @@ namespace PassGenCSharp
 
         bool isOnSettingsPage = false;
         private void button8_Click(object sender, EventArgs e) {
-            clearButtons();
+            ClearButtons();
             button8.BackColor = Color.LightGray;
             isOnSettingsPage = true;
             flowLayoutPanel2.Controls.Clear();
@@ -463,7 +466,7 @@ namespace PassGenCSharp
             Button changePath = new Button();
             changePath.Text = "Change";
             changePath.Height = 26;
-            changePath.Click += this.changePath;
+            changePath.Click += this.ChangePath;
             changePath.FlatStyle = FlatStyle.Flat;
 
             flowLayoutPanel2.Controls.Add(title);
@@ -472,7 +475,7 @@ namespace PassGenCSharp
 
         }
 
-        private void changePath(object sender, EventArgs e) {
+        private void ChangePath(object sender, EventArgs e) {
             folderBrowserDialog1.ShowDialog();
             try {
                 Properties.Settings.Default.Path = folderBrowserDialog1.SelectedPath;
@@ -493,7 +496,7 @@ namespace PassGenCSharp
         }
 
         private void button9_Click(object sender, EventArgs e) {
-            clearButtons();
+            ClearButtons();
             button9.BackColor = Color.LightGray;
             flowLayoutPanel2.Controls.Clear();
         }

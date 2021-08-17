@@ -13,8 +13,8 @@ namespace PassGenCSharp.App.Security {
 
 
         public StringAES() {
-            key = getKey();
-            vector = getIV();
+            key = GetKey();
+            vector = GetIV();
         }
 
         public byte[] EncryptStringToBytes(string plainText) {
@@ -54,7 +54,7 @@ namespace PassGenCSharp.App.Security {
             return decrypted;
         }
 
-        static byte[] getKey() {
+        static byte[] GetKey() {
             byte[] key;
             if (File.Exists("key.txt")) {
                 var keyStrings = File.ReadAllLines("key.txt");
@@ -76,7 +76,7 @@ namespace PassGenCSharp.App.Security {
 
         }
 
-        static byte[] getIV() {
+        static byte[] GetIV() {
             byte[] IV;
             if (File.Exists("IV.txt")) {
                 var ivStrings = File.ReadAllLines("IV.txt");

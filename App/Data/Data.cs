@@ -45,7 +45,7 @@ namespace PassGenCSharp.App.Data
             
         }
        
-        public List<String> getPlatforms() {
+        public List<string> GetPlatforms() {
             List<string> results = new List<string>();
             connection.Open();
             string commandText = "SELECT DISTINCT Platform FROM Passwords ORDER BY Platform ASC";
@@ -75,7 +75,7 @@ namespace PassGenCSharp.App.Data
         }
 
 
-        public List<Model> getDetails(string title) {
+        public List<Model> GetDetails(string title) {
             List<Model> results = new List<Model>();
             connection.Open();
             string commandText = $"SELECT * FROM Passwords WHERE Platform ='{title}'";
@@ -101,7 +101,7 @@ namespace PassGenCSharp.App.Data
             return results;
         }
 
-        public void updateDetails(Model model) {
+        public void UpdateDetails(Model model) {
             connection.Open();
             string commandText = $"UPDATE Passwords " +
                                  $"SET Platform = '{model.Platform}'," +
@@ -114,7 +114,7 @@ namespace PassGenCSharp.App.Data
             connection.Close();
         }
 
-        public void deleteRecord(Model model) {
+        public void DeleteRecord(Model model) {
             connection.Open();
             string commandText = $"DELETE FROM Passwords WHERE ID = {model.ID}";
             new SQLiteCommand(commandText, connection).ExecuteNonQuery();

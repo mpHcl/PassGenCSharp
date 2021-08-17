@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PassGenCSharp.App.Generator {
     public class Generator {
-        public static string generatePasswordAlfabetical(int size) {
+        public static string GeneratePasswordAlfabetical(int size) {
             string alfabet = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
             string result = "";
             var random = new Random();
@@ -19,7 +19,7 @@ namespace PassGenCSharp.App.Generator {
             return result;
         }
 
-        public static string generatePasswordAlfanumerical(int size) {
+        public static string GeneratePasswordAlfanumerical(int size) {
             string chars = "1234567890AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
             string result = "";
             var random = new Random();
@@ -32,7 +32,7 @@ namespace PassGenCSharp.App.Generator {
             return result;
         }
 
-        public static string generatePasswordPrintableChars(int size) {
+        public static string GeneratePasswordPrintableChars(int size) {
             string chars = "1234567890AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz!@#$%^&*()_+{}[]|\\:;\"<,>./";
             string result = "";
             var random = new Random();

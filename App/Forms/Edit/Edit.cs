@@ -42,7 +42,7 @@ namespace PassGenCSharp {
 
             try {
                 Console.WriteLine(model.Nickname);
-                data.updateDetails(model);
+                data.UpdateDetails(model);
                 MessageBox.Show("Changes saved");
                 this.Text = model.Platform;
                 this.Close();
@@ -95,7 +95,7 @@ namespace PassGenCSharp {
         }
 
         private void button2_Click(object sender, EventArgs e) {
-            data.deleteRecord(model);
+            data.DeleteRecord(model);
             MessageBox.Show("Info deleted");
             this.Close();
         }
